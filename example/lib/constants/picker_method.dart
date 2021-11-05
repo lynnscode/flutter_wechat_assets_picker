@@ -54,9 +54,21 @@ class PickMethod {
       method: (BuildContext context, List<AssetEntity> assets) {
         return AssetPicker.pickAssets(
           context,
-          maxAssets: maxAssetsCount,
+          maxAssets: 1,
           selectedAssets: assets,
           requestType: RequestType.video,
+          pickerTheme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: Colors.white,
+            textTheme: const TextTheme(
+              bodyText1:TextStyle(
+                color: Colors.blue,
+              ),
+              caption: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+          ),
         );
       },
     );
