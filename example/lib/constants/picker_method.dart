@@ -7,7 +7,9 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 /// Define a regular pick method.
+
 class PickMethod {
+
   const PickMethod({
     required this.icon,
     required this.name,
@@ -16,7 +18,7 @@ class PickMethod {
     this.onLongPress,
   });
 
-  const ColorScheme colorScheme = ColorScheme.light();
+
 
   factory PickMethod.image(int maxAssetsCount) {
     return PickMethod(

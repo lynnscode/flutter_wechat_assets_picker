@@ -48,6 +48,7 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
     bool useRootNavigator = true,
     Curve routeCurve = Curves.easeIn,
     Duration routeDuration = const Duration(milliseconds: 300),
+    bool canPreview = false,
   }) async {
     if (maxAssets < 1) {
       throw ArgumentError(
@@ -90,6 +91,7 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
       sortPathDelegate: sortPathDelegate,
       filterOptions: filterOptions,
       routeDuration: routeDuration,
+      canPreview: canPreview,
     );
     final Widget picker =
         ChangeNotifierProvider<DefaultAssetPickerProvider>.value(

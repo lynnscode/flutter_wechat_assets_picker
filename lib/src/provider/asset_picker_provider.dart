@@ -19,6 +19,7 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
     this.maxAssets = 9,
     this.pageSize = 320,
     this.pathThumbSize = 80,
+    this.canPreview = false,
     List<Asset>? selectedAssets,
   }) {
     if (selectedAssets?.isNotEmpty == true) {
@@ -39,6 +40,9 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
   /// Thumb size for path selector.
   /// 路径选择器中缩略图的大小
   final int pathThumbSize;
+
+  /// 是否可以预览
+  final bool canPreview;
 
   /// Clear all fields when dispose.
   /// 销毁时重置所有内容
@@ -248,11 +252,13 @@ class DefaultAssetPickerProvider
     int pageSize = 80,
     int pathThumbSize = 80,
     Duration routeDuration = const Duration(milliseconds: 300),
+    bool canPreview = false,
   }) : super(
           maxAssets: maxAssets,
           pageSize: pageSize,
           pathThumbSize: pathThumbSize,
           selectedAssets: selectedAssets,
+          canPreview:canPreview,
         ) {
     Constants.sortPathDelegate = sortPathDelegate ?? SortPathDelegate.common;
     Future<void>.delayed(routeDuration).then(

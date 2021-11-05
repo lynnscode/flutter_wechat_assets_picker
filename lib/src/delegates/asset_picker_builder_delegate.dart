@@ -3,6 +3,7 @@
 /// [Date] 2020-10-29 21:50
 ///
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:math' as math;
 import 'dart:typed_data';
@@ -1731,9 +1732,17 @@ class DefaultAssetPickerBuilderDelegate
         asset.type == AssetType.video &&
         provider.selectedAssets.isNotEmpty;
 
+    bool canPreview() => provider.canPreview;
+
     return Positioned.fill(
       child: GestureDetector(
         onTap: () async {
+          //是否可以预览
+          if (!canPreview()) {
+            log('_selectedBackdrop 不允许预览');
+            return;
+          }
+
           // When we reached the maximum select count and the asset
           // is not selected, do nothing.
           // When the special type is WeChat Moment, pictures and videos cannot
