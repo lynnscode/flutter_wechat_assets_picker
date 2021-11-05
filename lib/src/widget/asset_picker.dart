@@ -49,6 +49,7 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
     Curve routeCurve = Curves.easeIn,
     Duration routeDuration = const Duration(milliseconds: 300),
     bool canPreview = false,
+    SelectFilterFun? selectFilterFunc,
   }) async {
     if (maxAssets < 1) {
       throw ArgumentError(
@@ -92,6 +93,7 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
       filterOptions: filterOptions,
       routeDuration: routeDuration,
       canPreview: canPreview,
+      selectFilterFunc: selectFilterFunc
     );
     final Widget picker =
         ChangeNotifierProvider<DefaultAssetPickerProvider>.value(

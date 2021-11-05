@@ -1678,24 +1678,28 @@ class DefaultAssetPickerBuilderDelegate
         final GestureDetector selectorWidget = GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () async {
-            final bool? selectPredicateResult = await selectPredicate?.call(
-              context,
-              asset,
-              selected,
-            );
-            if (selectPredicateResult == false) {
-              return;
-            }
-            if (selected) {
-              provider.unSelectAsset(asset);
-              return;
-            }
-            if (isSingleAssetMode) {
-              provider.selectedAssets.clear();
-            }
-            provider.selectAsset(asset);
-            if (isSingleAssetMode && !isPreviewEnabled) {
-              Navigator.of(context).maybePop(provider.selectedAssets);
+
+            if (provider.selectFilterFunc != null
+                && provider.selectFilterFunc!(asset)) {
+              final bool? selectPredicateResult = await selectPredicate?.call(
+                context,
+                asset,
+                selected,
+              );
+              if (selectPredicateResult == false) {
+                return;
+              }
+              if (selected) {
+                provider.unSelectAsset(asset);
+                return;
+              }
+              if (isSingleAssetMode) {
+                provider.selectedAssets.clear();
+              }
+              provider.selectAsset(asset);
+              if (isSingleAssetMode && !isPreviewEnabled) {
+                Navigator.of(context).maybePop(provider.selectedAssets);
+              }
             }
           },
           child: Container(

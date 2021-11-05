@@ -2,6 +2,8 @@
 /// [Author] Alex (https://github.com/Alex525)
 /// [Date] 2020-05-30 20:56
 ///
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
@@ -71,6 +73,18 @@ class PickMethod {
               ),
             ),
           ),
+          selectFilterFunc:(AssetEntity assets){
+            log('canSelect :${assets.type}');
+            if (assets.type == AssetType.video) {
+              //根据视频长度过滤
+              if (assets.duration > 30) {
+                log('无法选择');
+                // showText('选取视频的长度不能超过30秒');
+                return false;
+              }
+            }
+            return true;
+          },
         );
       },
     );

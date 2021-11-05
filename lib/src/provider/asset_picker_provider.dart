@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 
 import '../constants/constants.dart';
 
+//选择过滤
+typedef SelectFilterFun = bool Function(AssetEntity asset);
 /// [ChangeNotifier] for assets picker.
 ///
 /// The provider maintain all methods that control assets and paths.
@@ -20,6 +22,7 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
     this.pageSize = 320,
     this.pathThumbSize = 80,
     this.canPreview = false,
+    this.selectFilterFunc,
     List<Asset>? selectedAssets,
   }) {
     if (selectedAssets?.isNotEmpty == true) {
@@ -43,6 +46,9 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
 
   /// 是否可以预览
   final bool canPreview;
+
+  ///选择过滤器
+  final SelectFilterFun? selectFilterFunc;
 
   /// Clear all fields when dispose.
   /// 销毁时重置所有内容
@@ -253,12 +259,14 @@ class DefaultAssetPickerProvider
     int pathThumbSize = 80,
     Duration routeDuration = const Duration(milliseconds: 300),
     bool canPreview = false,
+    SelectFilterFun? selectFilterFunc,
   }) : super(
           maxAssets: maxAssets,
           pageSize: pageSize,
           pathThumbSize: pathThumbSize,
           selectedAssets: selectedAssets,
           canPreview:canPreview,
+          selectFilterFunc:selectFilterFunc,
         ) {
     Constants.sortPathDelegate = sortPathDelegate ?? SortPathDelegate.common;
     Future<void>.delayed(routeDuration).then(
