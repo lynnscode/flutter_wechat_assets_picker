@@ -1435,6 +1435,7 @@ class DefaultAssetPickerBuilderDelegate
                       style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.normal,
+                        color: Colors.black,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -1446,12 +1447,7 @@ class DefaultAssetPickerBuilderDelegate
             ),
             child: Padding(
               padding: const EdgeInsetsDirectional.only(start: 5),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: theme.iconTheme.color!.withOpacity(0.5),
-                ),
-                child: Selector<DefaultAssetPickerProvider, bool>(
+              child: Selector<DefaultAssetPickerProvider, bool>(
                   selector: (_, DefaultAssetPickerProvider p) =>
                       p.isSwitchingPath,
                   builder: (_, bool isSwitchingPath, Widget? w) =>
@@ -1460,13 +1456,12 @@ class DefaultAssetPickerBuilderDelegate
                     alignment: Alignment.center,
                     child: w,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.keyboard_arrow_down,
                     size: 20,
-                    color: theme.colorScheme.primary,
+                    color: Colors.black,
                   ),
                 ),
-              ),
             ),
           ),
         ),

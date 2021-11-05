@@ -16,6 +16,8 @@ class PickMethod {
     this.onLongPress,
   });
 
+  const ColorScheme colorScheme = ColorScheme.light();
+
   factory PickMethod.image(int maxAssetsCount) {
     return PickMethod(
       icon: '🖼️',
@@ -27,6 +29,18 @@ class PickMethod {
           maxAssets: maxAssetsCount,
           selectedAssets: assets,
           requestType: RequestType.image,
+          pickerTheme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: Colors.white,
+            textTheme: const TextTheme(
+              bodyText1:TextStyle(
+                color: Colors.blue,
+              ),
+              caption: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+          ),
         );
       },
     );
