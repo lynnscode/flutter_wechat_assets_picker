@@ -2,6 +2,7 @@
 /// [Author] Alex (https://github.com/Alex525)
 /// [Date] 2020-05-30 20:56
 ///
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
@@ -17,17 +18,39 @@ class PickMethod {
   });
 
   factory PickMethod.image(int maxAssetsCount) {
+    const ColorScheme colorScheme = ColorScheme.light();
+
     return PickMethod(
       icon: '🖼️',
       name: 'Image picker',
       description: 'Only pick image from device.',
       method: (BuildContext context, List<AssetEntity> assets) {
-        return AssetPicker.pickAssets(
-          context,
+
+        return pickDLAssets(context,
           maxAssets: maxAssetsCount,
           selectedAssets: assets,
           requestType: RequestType.image,
+          specialPickerType: SpecialPickerType.noPreview,
+          pickerTheme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: Colors.white,
+            textTheme: const TextTheme(
+              bodyText1:TextStyle(
+                color: Colors.blue,
+              ),
+              caption: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+          ),
         );
+        // return AssetPicker.pickAssets(
+        //   context,
+        //   maxAssets: maxAssetsCount,
+        //   selectedAssets: assets,
+        //   requestType: RequestType.image,
+        // );
+
       },
     );
   }
