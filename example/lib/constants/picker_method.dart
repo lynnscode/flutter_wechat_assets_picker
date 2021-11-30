@@ -44,7 +44,7 @@ class PickMethod {
           maxAssets: maxAssetsCount,
           selectedAssets: assets,
           requestType: RequestType.image,
-          specialPickerType: SpecialPickerType.noPreview,
+          specialPickerType: SpecialPickerType.wechatMoment,
           provider:provider,
           pickerTheme: ThemeData(
             brightness: Brightness.light,
@@ -93,7 +93,6 @@ class PickMethod {
           maxAssets: maxAssetsCount,
           selectedAssets: assets,
           requestType: RequestType.video,
-          specialPickerType: SpecialPickerType.noPreview,
           provider:provider,
           selectPredicate: (BuildContext context, AssetEntity asset, bool isSelected){
             if (asset.type == AssetType.video) {

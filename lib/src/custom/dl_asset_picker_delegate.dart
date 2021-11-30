@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
@@ -7,6 +8,7 @@ import 'package:wechat_assets_picker/src/constants/constants.dart';
 import 'package:wechat_assets_picker/src/widget/scale_text.dart';
 
 import '../../wechat_assets_picker.dart';
+import 'dl_asset_picker_viewer_delegate.dart';
 
 class DLAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<AssetEntity, AssetPathEntity> {
   DLAssetPickerBuilderDelegate({
@@ -943,16 +945,20 @@ class DLAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<AssetEntit
             } else {
               _selected = provider.selectedAssets;
             }
-            final List<AssetEntity>? result =
-            await AssetPickerViewer.pushToViewer(
-              context,
-              currentIndex: 0,
-              previewAssets: _selected,
-              previewThumbSize: previewThumbSize,
-              selectedAssets: _selected,
-              selectorProvider: provider as DefaultAssetPickerProvider,
-              themeData: theme,
-              maxAssets: provider.maxAssets,
+
+            final List<AssetEntity>? result = await AssetPickerViewer.pushToViewerWithDelegate(context,
+              delegate: DLAssetPickerViewerBuilderDelegate(
+                currentIndex: 0,
+                previewAssets: _selected,
+                previewThumbSize: previewThumbSize,
+                selectedAssets: _selected,
+                selectorProvider: provider as DefaultAssetPickerProvider,
+                themeData: theme,
+                maxAssets: provider.maxAssets,
+                provider: _selected != null
+                    ? AssetPickerViewerProvider<AssetEntity>(_selected)
+                    : null,
+              ),
             );
             if (result != null) {
               Navigator.of(context).maybePop(result);
@@ -1092,6 +1098,7 @@ class DLAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<AssetEntit
     return Positioned.fill(
       child: GestureDetector(
         onTap: () async {
+          log("selectedBackdrop:click");
           // When we reached the maximum select count and the asset
           // is not selected, do nothing.
           // When the special type is WeChat Moment, pictures and videos cannot
@@ -1121,17 +1128,20 @@ class DLAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<AssetEntit
             _index = index;
           }
           final List<AssetEntity>? result =
-          await AssetPickerViewer.pushToViewer(
-            context,
-            currentIndex: _index,
-            previewAssets: _current,
-            themeData: theme,
-            previewThumbSize: previewThumbSize,
-            selectedAssets: _selected,
-            selectorProvider: provider as DefaultAssetPickerProvider,
-            specialPickerType: specialPickerType,
-            maxAssets: provider.maxAssets,
-            shouldReversePreview: isAppleOS,
+          await AssetPickerViewer.pushToViewerWithDelegate(context,
+              delegate: DLAssetPickerViewerBuilderDelegate(
+                currentIndex: _index,
+                previewAssets: _current,
+                themeData: theme,
+                previewThumbSize: previewThumbSize,
+                selectedAssets: _selected,
+                selectorProvider: provider as DefaultAssetPickerProvider,
+                maxAssets: provider.maxAssets,
+                shouldReversePreview: isAppleOS,
+                provider: _selected != null
+                    ? AssetPickerViewerProvider<AssetEntity>(_selected)
+                    : null,
+              ),
           );
           if (result != null) {
             Navigator.of(context).maybePop(result);
