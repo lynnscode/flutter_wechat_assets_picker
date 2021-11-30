@@ -3,6 +3,8 @@
 /// [Date] 2020-05-30 20:56
 ///
 
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -93,6 +95,17 @@ class PickMethod {
           requestType: RequestType.video,
           specialPickerType: SpecialPickerType.noPreview,
           provider:provider,
+          selectPredicate: (BuildContext context, AssetEntity asset, bool isSelected){
+            if (asset.type == AssetType.video) {
+              log('asset.duration:${asset.duration}');
+              //根据视频长度过滤
+              if (asset.duration > 30) {
+                log('选取视频的长度不能超过30秒');
+                return false;
+              }
+            }
+            return true;
+          },
           pickerTheme: ThemeData(
             brightness: Brightness.light,
             primaryColor: Colors.white,
