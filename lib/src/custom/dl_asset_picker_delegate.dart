@@ -8,8 +8,7 @@ import 'package:wechat_assets_picker/src/widget/scale_text.dart';
 
 import '../../wechat_assets_picker.dart';
 
-class DLAssetPickerBuilderDelegate
-    extends AssetPickerBuilderDelegate<AssetEntity, AssetPathEntity> {
+class DLAssetPickerBuilderDelegate extends AssetPickerBuilderDelegate<AssetEntity, AssetPathEntity> {
   DLAssetPickerBuilderDelegate({
     required DefaultAssetPickerProvider provider,
     required PermissionState initialPermission,
@@ -988,14 +987,12 @@ class DLAssetPickerBuilderDelegate
   Widget itemBannedIndicator(BuildContext context, AssetEntity asset) {
     return Consumer<DefaultAssetPickerProvider>(
       builder: (_, DefaultAssetPickerProvider p, __) {
-        if ((!p.selectedAssets.contains(asset) && p.selectedMaximumAssets) ||
-            (isWeChatMoment &&
-                asset.type == AssetType.video &&
-                p.selectedAssets.isNotEmpty)) {
-          return Container(
-            color: theme.colorScheme.background.withOpacity(.85),
-          );
-        }
+        // if ((!p.selectedAssets.contains(asset) && p.selectedMaximumAssets) ||
+        //     (isWeChatMoment && asset.type == AssetType.video && p.selectedAssets.isNotEmpty)) {
+        //   return Container(
+        //     color: theme.colorScheme.background.withOpacity(.85),
+        //   );
+        // }
         return const SizedBox.shrink();
       },
     );
@@ -1037,6 +1034,7 @@ class DLAssetPickerBuilderDelegate
         final GestureDetector selectorWidget = GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () async {
+
             final bool? selectPredicateResult = await selectPredicate?.call(
               context,
               asset,

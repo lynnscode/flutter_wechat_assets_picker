@@ -4,6 +4,7 @@ export 'package:photo_manager/photo_manager.dart';
 
 export 'src/constants/enums.dart';
 export 'src/custom/dl_asset_picker.dart';
+export 'src/custom/dl_asset_picker_delegate.dart';
 export 'src/delegates/asset_picker_builder_delegate.dart';
 export 'src/delegates/asset_picker_viewer_builder_delegate.dart';
 export 'src/delegates/assets_picker_text_delegate.dart';

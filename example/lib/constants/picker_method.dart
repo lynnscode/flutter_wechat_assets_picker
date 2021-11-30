@@ -2,9 +2,11 @@
 /// [Author] Alex (https://github.com/Alex525)
 /// [Date] 2020-05-30 20:56
 ///
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:wechat_assets_picker_demo/customs/dl_custom.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 /// Define a regular pick method.
@@ -20,17 +22,28 @@ class PickMethod {
   factory PickMethod.image(int maxAssetsCount) {
     const ColorScheme colorScheme = ColorScheme.light();
 
+    int maxAssets = 9;
+    int pageSize = 320;
+    int pathThumbSize = 200;
+    int gridCount = 4;
+
     return PickMethod(
       icon: '🖼️',
       name: 'Image picker',
       description: 'Only pick image from device.',
       method: (BuildContext context, List<AssetEntity> assets) {
+        DefaultAssetPickerProvider provider = DLAssetPickerProvider(
+          maxAssets: maxAssets,
+          pageSize: pageSize,
+          pathThumbSize: pathThumbSize,
+          selectedAssets: assets,);
 
-        return pickDLAssets(context,
+        return DLAssetPicker.pickAssets(context,
           maxAssets: maxAssetsCount,
           selectedAssets: assets,
           requestType: RequestType.image,
           specialPickerType: SpecialPickerType.noPreview,
+          provider:provider,
           pickerTheme: ThemeData(
             brightness: Brightness.light,
             primaryColor: Colors.white,
@@ -56,11 +69,43 @@ class PickMethod {
   }
 
   factory PickMethod.video(int maxAssetsCount) {
+
+    int maxAssets = 1;
+    int pageSize = 320;
+    int pathThumbSize = 200;
+    int gridCount = 4;
+
     return PickMethod(
       icon: '🎞',
       name: 'Video picker',
       description: 'Only pick video from device.',
       method: (BuildContext context, List<AssetEntity> assets) {
+        DefaultAssetPickerProvider provider = DLAssetPickerProvider(
+          maxAssets: maxAssets,
+          pageSize: pageSize,
+          requestType: RequestType.video,
+          pathThumbSize: pathThumbSize,
+          selectedAssets: assets,);
+
+        return DLAssetPicker.pickAssets(context,
+          maxAssets: maxAssetsCount,
+          selectedAssets: assets,
+          requestType: RequestType.video,
+          specialPickerType: SpecialPickerType.noPreview,
+          provider:provider,
+          pickerTheme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: Colors.white,
+            textTheme: const TextTheme(
+              bodyText1:TextStyle(
+                color: Colors.blue,
+              ),
+              caption: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+          ),
+        );
         return AssetPicker.pickAssets(
           context,
           maxAssets: maxAssetsCount,
